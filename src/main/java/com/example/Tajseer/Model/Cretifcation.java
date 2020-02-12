@@ -2,7 +2,10 @@ package com.example.Tajseer.Model;
 
 import javax.persistence.*;
 import javax.swing.text.Document;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table
 public class Cretifcation {
@@ -22,6 +25,76 @@ public class Cretifcation {
     private String date;
     @Column(name="document")
     private String document;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_user")
+    private Users user;
+
+    public Org getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Org organization) {
+        this.organization = organization;
+    }
+
+    public Cretifcation(int id, String name, String type, String address, String descr, String date, String document, Users user, Org organization, Org org) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.address = address;
+        this.descr = descr;
+        this.date = date;
+        this.document = document;
+        this.user = user;
+        this.organization = organization;
+        this.org = org;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "OrganizationID")
+    private Org organization;
+    public String getDescr() {
+        return descr;
+    }
+
+    public void setDescr(String descr) {
+        this.descr = descr;
+    }
+
+    public Org getOrg() {
+        return org;
+    }
+
+    public void setOrg(Org org) {
+        this.org = org;
+    }
+
+    public Cretifcation(int id, String name, String type, String address, String descr, String date, String document, Users user, Org org) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.address = address;
+        this.descr = descr;
+        this.date = date;
+        this.document = document;
+        this.user = user;
+        this.org = org;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_Org")
+    private Org org;
+    public Cretifcation(Users user) {
+        this.user = user;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
 
     public Cretifcation( ) {
 

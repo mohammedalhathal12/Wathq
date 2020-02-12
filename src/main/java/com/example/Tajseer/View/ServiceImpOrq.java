@@ -4,9 +4,10 @@ import com.example.Tajseer.Model.Org;
 import com.example.Tajseer.Repostiry.RepOrg;
 import com.example.Tajseer.Service.SerivesOrg;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ServiceImpOrq implements SerivesOrg {
     @Autowired
     private RepOrg rep;

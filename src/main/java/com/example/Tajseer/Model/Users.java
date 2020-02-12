@@ -1,6 +1,8 @@
 package com.example.Tajseer.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,6 +23,54 @@ public class Users {
     @Column(name = "Status")
     private int Status;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Cretifcation> certificates = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Authority")
+    private Authoriy authoriy;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "org")
+    private Org org;
+
+    public Users(int id, String name, String last_name, int password, int email, int status, List<Cretifcation> certificates, Authoriy authoriy, Org org, int orgID) {
+        Id = id;
+        Name = name;
+        this.last_name = last_name;
+        Password = password;
+        Email = email;
+        Status = status;
+        this.certificates = certificates;
+        this.authoriy = authoriy;
+        this.org = org;
+        this.orgID = orgID;
+    }
+
+    public Org getOrg() {
+        return org;
+    }
+
+    public void setOrg(Org org) {
+        this.org = org;
+    }
+
+    public Users(Org org) {
+        this.org = org;
+    }
+
+    public Users(int id, String name, String last_name, int password, int email, int status, List<Cretifcation> certificates, Authoriy authoriy, int orgID) {
+        Id = id;
+        Name = name;
+        this.last_name = last_name;
+        Password = password;
+        Email = email;
+        Status = status;
+        this.certificates = certificates;
+        this.authoriy = authoriy;
+        this.orgID = orgID;
+    }
+
+    @Column(name = "OrgID")
+    private int orgID;
     public Users() {
     }
 
@@ -72,5 +122,27 @@ public class Users {
         Status = status;
     }
 
+    public List<Cretifcation> getCertificates() {
+        return certificates;
+    }
 
+    public void setCertificates(List<Cretifcation> certificates) {
+        this.certificates = certificates;
+    }
+
+    public Authoriy getAuthoriy() {
+        return authoriy;
+    }
+
+    public void setAuthoriy(Authoriy authoriy) {
+        this.authoriy = authoriy;
+    }
+
+    public int getOrgID() {
+        return orgID;
+    }
+
+    public void setOrgID(int orgID) {
+        this.orgID = orgID;
+    }
 }
