@@ -1,53 +1,71 @@
 package com.example.Tajseer.Model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
 public class Shared {
     @Id
-    @GeneratedValue
-    private int id;
-    @Column(name="Shared")
-    private String Shared;
-    @Column(name="SharedDec")
-    private String SharedDec;
-    @Column(name="Url")
-    private int Url;
+    @Column(name = "SharedID")
+    private int sharedID;
+    @Column(name = "SharedDate")
+    private String sharedDate;
+    @Column(name = "SharedUrl")
+    private String sharedUrl;
 
-    public Shared() {
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "UserID")
+    private Users userShareds;
 
+    @ManyToMany(mappedBy = "shareds", cascade = {CascadeType.ALL})
+    private Set<Cretifcation> certificates = new HashSet<Cretifcation>();
+
+    public Shared() {}
+
+    public Shared(int sharedID, String sharedDate, String sharedUrl) {
+        this.sharedID = sharedID;
+        this.sharedDate = sharedDate;
+        this.sharedUrl = sharedUrl;
     }
 
-    public int getId() {
-        return id;
+    public int getSharedID() {
+        return sharedID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSharedID(int sharedID) {
+        this.sharedID = sharedID;
     }
 
-    public String getShared() {
-        return Shared;
+    public String getSharedDate() {
+        return sharedDate;
     }
 
-    public void setShared(String shared) {
-        Shared = shared;
+    public void setSharedDate(String sharedDate) {
+        this.sharedDate = sharedDate;
     }
 
-    public String getSharedDec() {
-        return SharedDec;
+    public String getSharedUrl() {
+        return sharedUrl;
     }
 
-    public void setSharedDec(String sharedDec) {
-        SharedDec = sharedDec;
+    public void setSharedUrl(String sharedUrl) {
+        this.sharedUrl = sharedUrl;
     }
 
-    public int getUrl() {
-        return Url;
+    public Users getUserShareds() {
+        return userShareds;
     }
 
-    public void setUrl(int url) {
-        Url = url;
+    public void setUserShareds(Users userShareds) {
+        this.userShareds = userShareds;
     }
-}
+
+    public Set<Cretifcation> getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(Set<Cretifcation> certificates) {
+        this.certificates = certificates;
+    }}

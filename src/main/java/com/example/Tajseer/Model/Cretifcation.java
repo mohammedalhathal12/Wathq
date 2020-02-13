@@ -2,9 +2,7 @@ package com.example.Tajseer.Model;
 
 import javax.persistence.*;
 import javax.swing.text.Document;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table
@@ -13,8 +11,8 @@ public class Cretifcation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private int id;
-    @Column(name="name")
-    private String name;
+    @Column(name="nameCre")
+    private String nameCre;
     @Column(name="type")
     private String type;
     @Column(name = "address")
@@ -24,10 +22,44 @@ public class Cretifcation {
     @Column(name="date")
     private String date;
     @Column(name="document")
-    private String document;
+    @Lob
+    private byte[] document;
+
+    public Cretifcation(int id, String nameCre, String type, String address, String descr, String date, byte[] document, Users user, Set<Shared> shareds, Org organization, Org org) {
+        this.id = id;
+        this.nameCre = nameCre;
+        this.type = type;
+        this.address = address;
+        this.descr = descr;
+        this.date = date;
+        this.document = document;
+        this.user = user;
+        this.shareds = shareds;
+        this.organization = organization;
+        this.org = org;
+    }
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_user")
     private Users user;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "certificates_shareds",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "SharedID")}
+    )
+    private Set<Shared> shareds = new HashSet<Shared>();
+
+    public Set<Shared> getShareds() {
+        return shareds;
+    }
+
+    public void setShareds(Set<Shared> shareds) {
+        this.shareds = shareds;
+    }
+
+    public Cretifcation(String fileName, String contentType, byte[] bytes) {
+    }
 
     public Org getOrganization() {
         return organization;
@@ -37,18 +69,6 @@ public class Cretifcation {
         this.organization = organization;
     }
 
-    public Cretifcation(int id, String name, String type, String address, String descr, String date, String document, Users user, Org organization, Org org) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.address = address;
-        this.descr = descr;
-        this.date = date;
-        this.document = document;
-        this.user = user;
-        this.organization = organization;
-        this.org = org;
-    }
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "OrganizationID")
@@ -69,9 +89,9 @@ public class Cretifcation {
         this.org = org;
     }
 
-    public Cretifcation(int id, String name, String type, String address, String descr, String date, String document, Users user, Org org) {
+    public Cretifcation(int id, String name, String type, String address, String descr, String date, byte[] document, Users user, Org org) {
         this.id = id;
-        this.name = name;
+        this.nameCre = nameCre;
         this.type = type;
         this.address = address;
         this.descr = descr;
@@ -100,6 +120,14 @@ public class Cretifcation {
 
     }
 
+    public String getNameCre() {
+        return nameCre;
+    }
+
+    public void setNameCre(String nameCre) {
+        this.nameCre = nameCre;
+    }
+
     public int getId() {
         return id;
     }
@@ -109,11 +137,11 @@ public class Cretifcation {
     }
 
     public String getName() {
-        return name;
+        return nameCre;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.nameCre = nameCre;
     }
 
     public String getType() {
@@ -148,11 +176,11 @@ public class Cretifcation {
         this.date = date;
     }
 
-    public String getDocument() {
+    public byte[]  getDocument() {
         return document;
     }
 
-    public void setDocument(String document) {
+    public void setDocument(byte[] document ) {
         this.document = document;
     }
 }

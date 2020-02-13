@@ -25,12 +25,29 @@ public class Users {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Cretifcation> certificates = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "userShareds", cascade = CascadeType.ALL)
+    private List<Shared> shareds = new ArrayList<>();
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Authority")
     private Authoriy authoriy;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "org")
     private Org org;
+
+    public List<Shared> getShareds() {
+        return shareds;
+    }
+
+    public void setShareds(List<Shared> shareds) {
+        this.shareds = shareds;
+    }
+
+    public Users(List<Shared> shareds) {
+        this.shareds = shareds;
+    }
 
     public Users(int id, String name, String last_name, int password, int email, int status, List<Cretifcation> certificates, Authoriy authoriy, Org org, int orgID) {
         Id = id;
